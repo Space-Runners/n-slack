@@ -1,20 +1,22 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "noImplicitAny": false,
-    "importHelpers": true,
-    "removeComments": true,
-    "noLib": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es6",
-    "sourceMap": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "skipLibCheck": true,
-    "strictNullChecks": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": true,
+        "noImplicitAny": false,
+        "importHelpers": true,
+        "removeComments": true,
+        "noLib": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es6",
+        "sourceMap": false,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "skipLibCheck": true,
+        "strictNullChecks": true,
+        "types": ["vitest/globals"],
+        "esModuleInterop": true
+    },
+    "include": ["src/**/*", "__mocks__"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
 }
