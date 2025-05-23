@@ -15,10 +15,7 @@ describe("slack.module", () => {
             imports: [
                 SlackModule.forRootAsync({
                     useFactory: () => {
-                        return {
-                            type: "webhook",
-                            url: `${baseUrl}/webhook`,
-                        };
+                        return { type: "webhook", url: `${baseUrl}/webhook` };
                     },
                 }),
             ],
@@ -26,12 +23,10 @@ describe("slack.module", () => {
         const service = app.get<SlackService>(SlackService);
 
         const scope = nock(baseUrl, { encodedQueryParams: true })
-            .post("/webhook", {
-                text: "hello-world",
-            })
+            .post("/webhook", { text: "hello-world", channel: "test" })
             .reply(200, "ok");
 
-        await service.postMessage({ text: "hello-world" });
+        await service.postMessage({ text: "hello-world", channel: "test" });
 
         scope.done();
     });
@@ -40,17 +35,11 @@ describe("slack.module", () => {
         @Injectable()
         class ConfigClass {
             slackConfigModuleOptions(): SlackConfig {
-                return {
-                    type: "webhook",
-                    url: `${baseUrl}/webhook`,
-                };
+                return { type: "webhook", url: `${baseUrl}/webhook` };
             }
         }
 
-        @Module({
-            exports: [ConfigClass],
-            providers: [ConfigClass],
-        })
+        @Module({ exports: [ConfigClass], providers: [ConfigClass] })
         class TestModule {}
 
         const app = await Test.createTestingModule({
@@ -64,12 +53,10 @@ describe("slack.module", () => {
         const service = app.get<SlackService>(SlackService);
 
         const scope = nock(baseUrl, { encodedQueryParams: true })
-            .post("/webhook", {
-                text: "hello-world",
-            })
+            .post("/webhook", { text: "hello-world", channel: "test" })
             .reply(200, "ok");
 
-        await service.postMessage({ text: "hello-world" });
+        await service.postMessage({ text: "hello-world", channel: "test" });
 
         scope.done();
     });

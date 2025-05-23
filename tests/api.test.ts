@@ -20,7 +20,7 @@ describe("api", () => {
     });
 
     it("must send requests to API", async () => {
-        await service.postMessage({ text: "hello-world" });
-        expect(spy).toHaveBeenCalledWith({ text: "hello-world" });
+        await service.postMessage({ text: "hello-world", channel: "test" });
+        expect(spy).toHaveBeenCalledWith({ text: "hello-world", channel: "test" });
     });
 });

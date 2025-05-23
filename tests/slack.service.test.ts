@@ -18,10 +18,11 @@ describe("SlackService", () => {
         });
         describe("sendText", () => {
             it("must forward to sendMessage", async () => {
-                await service.sendText("hello world", { channel: "test" });
+                await service.sendText("hello world", { channel: "test", attachments: [] });
                 expect(service.postMessage).toHaveBeenCalledWith({
                     channel: "test",
                     text: "hello world",
+                    attachments: [],
                 });
             });
         });

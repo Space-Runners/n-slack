@@ -11,19 +11,14 @@ describe("webhook", () => {
 
     describe("simple webhook", () => {
         it("must send requests to API", async () => {
-            const app = await createApp({
-                type: "webhook",
-                url: `${baseUrl}/simple-webhook`,
-            });
+            const app = await createApp({ type: "webhook", url: `${baseUrl}/simple-webhook` });
             service = app.get<SlackService>(SlackService);
 
             const scope = nock(baseUrl, { encodedQueryParams: true })
-                .post("/simple-webhook", {
-                    text: "hello-world",
-                })
+                .post("/simple-webhook", { text: "hello-world", channel: "test" })
                 .reply(200, "ok");
 
-            await service.postMessage({ text: "hello-world" });
+            await service.postMessage({ text: "hello-world", channel: "test" });
 
             scope.done();
         });
@@ -31,17 +26,12 @@ describe("webhook", () => {
         it("Should throw when request fails", async () => {
             expect.assertions(1);
             const scope = nock(baseUrl, { encodedQueryParams: true })
-                .post("/failing-simple-webhook", {
-                    text: "hello-world",
-                })
+                .post("/failing-simple-webhook", { text: "hello-world", channel: "test" })
                 .reply(500, "fail");
-            const app = await createApp({
-                type: "webhook",
-                url: `${baseUrl}/failing-simple-webhook`,
-            });
+            const app = await createApp({ type: "webhook", url: `${baseUrl}/failing-simple-webhook` });
             service = app.get<SlackService>(SlackService);
 
-            await expect(service.postMessage({ text: "hello-world" })).rejects.toThrow();
+            await expect(service.postMessage({ text: "hello-world", channel: "test" })).rejects.toThrow();
 
             scope.done();
         });
@@ -52,14 +42,8 @@ describe("webhook", () => {
             const app = await createApp({
                 type: "webhook",
                 channels: [
-                    {
-                        name: "test-channel",
-                        url: `${baseUrl}/test-webhook`,
-                    },
-                    {
-                        name: "failing-test-channel",
-                        url: `${baseUrl}/failing-webhook`,
-                    },
+                    { name: "test-channel", url: `${baseUrl}/test-webhook` },
+                    { name: "failing-test-channel", url: `${baseUrl}/failing-webhook` },
                 ],
             });
             service = app.get<SlackService>(SlackService);
@@ -67,15 +51,10 @@ describe("webhook", () => {
 
         it("must send requests to API", async () => {
             const scope = nock(baseUrl, { encodedQueryParams: true })
-                .post("/test-webhook", {
-                    text: "hello-world",
-                })
+                .post("/test-webhook", { text: "hello-world" })
                 .reply(200, "ok");
 
-            await service.postMessage({
-                text: "hello-world",
-                channel: "test-channel",
-            });
+            await service.postMessage({ text: "hello-world", channel: "test-channel" });
 
             scope.done();
         });
