@@ -1,5 +1,4 @@
 import { describe, beforeEach, it, expect, vi } from "vitest";
-import { BlockCollection, Blocks } from "slack-block-builder";
 
 import { createApp } from "./utils";
 import { SlackService } from "../src/slack.service";
@@ -19,20 +18,21 @@ describe("SlackService", () => {
         });
         describe("sendText", () => {
             it("must forward to sendMessage", async () => {
-                await service.sendText("hello world");
+                await service.sendText("hello world", { channel: "test" });
                 expect(service.postMessage).toHaveBeenCalledWith({
+                    channel: "test",
                     text: "hello world",
                 });
             });
         });
 
-        describe("sendBlocks", () => {
-            it("must forward to sendMessage", async () => {
-                const blocks = BlockCollection(Blocks.Section({ text: "hello-world" }));
-                await service.sendBlocks(blocks);
-                expect(service.postMessage).toHaveBeenCalledWith({ blocks });
-            });
-        });
+        // describe("sendBlocks", () => {
+        //     it("must forward to sendMessage", async () => {
+        //         const blocks = BlockCollection(Blocks.Section({ text: "hello-world" }));
+        //         await service.sendBlocks(blocks);
+        //         expect(service.postMessage).toHaveBeenCalledWith({ blocks });
+        //     });
+        // });
 
         describe("WebClient", () => {
             it("slack sdk WebClient is available", async () => {

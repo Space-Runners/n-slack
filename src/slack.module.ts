@@ -60,7 +60,7 @@ export class SlackModule {
             provide: SLACK_MODULE_OPTIONS,
             inject: [SLACK_MODULE_USER_OPTIONS],
             useFactory: (opts: SlackConfig) => ({
-                output: /* istanbul ignore next */ (out: unknown) => process.stdout.write(`${JSON.stringify(out)}\n`),
+                output: (out: unknown) => process.stdout.write(`${JSON.stringify(out)}\n`),
                 ...opts,
             }),
         };

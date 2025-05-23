@@ -18,8 +18,7 @@
     "dependencies": {
         "@nestjs/common": ">=10",
         "@slack/web-api": "^7.9.2",
-        "axios": "^1.9.0",
-        "slack-block-builder": "^2.8.0"
+        "axios": "^1.9.0"
     },
     "devDependencies": {
         "@nestjs/testing": "^11.1.1",

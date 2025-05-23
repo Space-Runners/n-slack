@@ -9,17 +9,14 @@
 
 ---
 
-**N-slack** enables you to send Slack messages from your [NestJS] projects. With support for `slack-block-builder`, you can create maintainable, testable, and reusable Slack message structures for production use.
+**N-slack** enables you to send Slack messages from your [NestJS] projects.
 
 [nestjs]: https://github.com/nestjs/nest
 
 ### ⚡ Features
 
--   Build messages using [slack-block-builder]
 -   Send messages via Slack Web API
 -   Webhook support
-
-[slack-block-builder]: https://github.com/raycharius/slack-block-builder
 
 ### 🚀 Quick Start
 
